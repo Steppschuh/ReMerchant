@@ -1,0 +1,171 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/light_background"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context=".MainActivity$PlaceholderFragment">
+
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <RelativeLayout
+            android:id="@+id/imageContainer"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.CardView
+                xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                android:layout_gravity="center"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="5dp"
+                card_view:cardCornerRadius="4dp">
+
+                <RelativeLayout
+                    android:layout_margin="0dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <ImageView
+                        android:id="@+id/itemImage"
+                        android:scaleType="centerCrop"
+                        android:src="@drawable/sample_profile"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent" />
+
+                    <RelativeLayout
+                        android:id="@+id/itemNameContainer"
+                        android:padding="0dp"
+                        android:layout_alignParentBottom="true"
+                        android:background="@color/black_transparent"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <TextView
+                            android:id="@+id/itemNameLabel"
+                            android:text="Customer Name"
+                            android:layout_margin="10dp"
+                            android:textColor="@android:color/white"
+                            android:textSize="@dimen/abc_text_size_body_1_material"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                </RelativeLayout>
+
+            </android.support.v7.widget.CardView>
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_weight="1"
+            android:layout_margin="5dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    card_view:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <TextView
+                            android:id="@+id/estimatePriceLabel"
+                            android:text="@string/customer_layality"
+                            android:textSize="@dimen/abc_text_size_body_1_material"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <SeekBar
+                            android:id="@+id/seekBar"
+                            android:layout_below="@id/estimatePriceLabel"
+                            android:layout_width="fill_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="5dp"
+                            android:layout_marginBottom="0dp"
+                            android:max="100"
+                            android:progress="30"
+                            android:secondaryProgress="0" />
+
+                        <TextView
+                            android:id="@+id/estimatePriceValue"
+                            android:text="3 / 10"
+                            android:layout_below="@id/seekBar"
+                            android:textSize="@dimen/abc_text_size_body_1_material"
+                            android:gravity="center"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+                <android.support.v7.widget.CardView
+                    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+                    android:layout_gravity="center"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginTop="10dp"
+                    card_view:cardCornerRadius="4dp">
+
+                    <RelativeLayout
+                        android:layout_margin="10dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent">
+
+                        <LinearLayout
+                            android:orientation="horizontal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content">
+
+                            <Button
+                                android:id="@+id/skipItem"
+                                android:text="@string/customer_promo_offer"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                            <Button
+                                android:id="@+id/submitItem"
+                                android:text="@string/customer_process_order"
+                                android:layout_weight="1"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content" />
+
+                        </LinearLayout>
+
+                    </RelativeLayout>
+
+                </android.support.v7.widget.CardView>
+
+            </LinearLayout>
+
+        </RelativeLayout>
+
+    </LinearLayout>
+
+
+
+</RelativeLayout>

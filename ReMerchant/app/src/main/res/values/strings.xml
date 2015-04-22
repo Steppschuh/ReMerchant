@@ -1,6 +1,11 @@
 <resources>
-    <string name="app_name">ReMerchant</string>
+    <string name="app_name">Re-Merchant</string>
 
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
+
+    <string name="customer_layality">Loyality Bonus</string>
+    <string name="customer_process_order">Process Order</string>
+    <string name="customer_promo_offer">Offer Promo</string>
+
 </resources>

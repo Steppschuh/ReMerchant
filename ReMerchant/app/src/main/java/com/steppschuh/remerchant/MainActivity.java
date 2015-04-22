@@ -8,10 +8,23 @@ import android.view.MenuItem;
 
 public class MainActivity extends ActionBarActivity {
 
+    MobileApp app;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        app = (MobileApp) getApplication();
+        if (!app.isInitialized()) {
+            app.initialize(this);
+        } else {
+            app.setContextActivity(this);
+        }
+
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new FragmentOverview())
+                .commit();
     }
 
 
@@ -35,5 +48,11 @@ public class MainActivity extends ActionBarActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        app.destroy();
     }
 }

@@ -1,5 +1,6 @@
 # ReMerchant
 We wanted to 
+
 	Build a registered customer database
 	
 	Identify our customers

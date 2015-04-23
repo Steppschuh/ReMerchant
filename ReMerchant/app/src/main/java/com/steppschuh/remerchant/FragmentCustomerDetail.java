@@ -1,5 +1,7 @@
 package com.steppschuh.remerchant;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
@@ -11,7 +13,7 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
-public class FragmentOverview extends Fragment {
+public class FragmentCustomerDetail extends Fragment implements CustomersChangedListener {
 
     MobileApp app;
 
@@ -24,15 +26,20 @@ public class FragmentOverview extends Fragment {
     Button processOrderButton;
     Button offerPromoButton;
 
+    String customerDevice;
+    Customer customer;
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        contentFragment = inflater.inflate(R.layout.fragment_overview, container, false);
+        contentFragment = inflater.inflate(R.layout.fragment_customer_detail, container, false);
 
         app = (MobileApp) getActivity().getApplicationContext();
+        app.addCustomersChangedListener(this);
         //getActivity().setTitle(getString(R.string.title_estimate));
 
         setupUi();
+        updateValues();
 
         return contentFragment;
     }
@@ -53,7 +60,7 @@ public class FragmentOverview extends Fragment {
 
             public void onProgressChanged(SeekBar seekBar, int progress, boolean fromUser) {
                 seekValue = progress;
-                //updatePriceValue(seekValue);
+                loyalityValue.setText(seekValue + " / 10");
             }
 
             public void onStartTrackingTouch(SeekBar seekBar) {
@@ -63,27 +70,70 @@ public class FragmentOverview extends Fragment {
             public void onStopTrackingTouch(SeekBar seekBar) {
                 //int price = currentItem.percentageToPrice(seekValue);
                 //currentItem.setEstimatedPrice(price);
+                customer.setLoyality(seekValue);
+                if (customer.getLoyality() == 10) {
+                    offerPromoButton.setEnabled(true);
+                } else {
+                    offerPromoButton.setEnabled(false);
+                }
             }
         });
 
         offerPromoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(getString(R.string.customer_promo_offer))
+                        .setMessage("Invoking Albert payment flow with promotional discount")
+                        .show();
             }
         });
 
         processOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                new AlertDialog.Builder(getActivity())
+                        .setTitle(getString(R.string.customer_process_order))
+                        .setMessage("Invoking Albert payment flow")
+                        .show();
             }
         });
+    }
+
+    private void updateValues() {
+        customer = app.getCustomerByDevice(customerDevice);
+
+        customerName.setText(customer.getName());
+        customerImage.setImageDrawable(customer.getPicture());
+
+        seekBar.setProgress(customer.getLoyality());
+        loyalityValue.setText(customer.getLoyality() + " / 10");
+
+        if (customer.getLoyality() == 10) {
+            offerPromoButton.setEnabled(true);
+        } else {
+            offerPromoButton.setEnabled(false);
+        }
     }
 
     @Override
     public void onStart() {
         super.onStart();
         //showSampleItem();
+    }
+
+    @Override
+    public void onCustomersChanged() {
+        synchronized (this) {
+            this.setupUi();
+        }
+    }
+
+    public String getCustomerDevice() {
+        return customerDevice;
+    }
+
+    public void setCustomerDevice(String customerDevice) {
+        this.customerDevice = customerDevice;
     }
 }

@@ -10,7 +10,6 @@ import android.content.Intent;
 import android.content.IntentFilter;
 import android.util.Log;
 
-import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -33,10 +32,16 @@ public class MobileApp extends Application {
     private Activity contextActivity;
 
     BroadcastReceiver mReceiver;
-    ArrayList<Customer> customers;
+    ArrayList<Customer> knownCustomers;
+    ArrayList<Customer> unknownCustomers;
+
+    ArrayList<CustomersChangedListener> customersChangedListeners;
 
     public void initialize(Activity contextActivity) {
+        Log.d(MobileApp.TAG, "Initializing app");
         this.contextActivity = contextActivity;
+
+        customersChangedListeners = new ArrayList<>();
 
         restoreSampleCustomers();
         startDeviceDetection();
@@ -49,49 +54,65 @@ public class MobileApp extends Application {
 
 
     private void restoreSampleCustomers() {
-        customers = new ArrayList<>();
+        knownCustomers = new ArrayList<>();
+        unknownCustomers = new ArrayList<>();
 
         Customer customer1 = new Customer(0);
-        customer1.setName("John Doe");
+        customer1.setName("Arif Datoo");
         customer1.setLoyality(2);
         customer1.setDeviceId("78:A5:04:17:5C:F7");
         customer1.setDeviceName("78A504175CF7");
-        customer1.setLastVisit(0);
-        customer1.setPicture(getResources().getDrawable(R.drawable.sample_profile));
+        customer1.setLastVisit(1429733487200l);
+        customer1.setPicture(getResources().getDrawable(R.drawable.profile_arif_datoo));
 
         Customer customer2 = new Customer(1);
-        customer2.setName("Jane Doe");
+        customer2.setName("Brett Charrington");
         customer2.setLoyality(4);
         customer2.setDeviceId("78:A5:04:17:5D:84");
         customer2.setDeviceName("78A504175D84");
-        customer2.setLastVisit(0);
-        customer2.setPicture(getResources().getDrawable(R.drawable.sample_profile));
+        customer2.setLastVisit(1429733487200l);
+        customer2.setPicture(getResources().getDrawable(R.drawable.profile_brett_arrington));
 
         Customer customer3 = new Customer(1);
         customer3.setName("Max Mustermann");
         customer3.setLoyality(4);
         customer3.setDeviceId("78:A5:04:17:60:2A");
         customer3.setDeviceName("78A50417602A");
-        customer3.setLastVisit(0);
-        customer3.setPicture(getResources().getDrawable(R.drawable.sample_profile));
+        customer3.setLastVisit(1429733487200l);
+        customer3.setPicture(getResources().getDrawable(R.drawable.profile_none));
 
         Customer customer4 = new Customer(1);
-        customer4.setName("Marie Mustermann");
+        customer4.setName("Jonas Pohlmann");
         customer4.setLoyality(10);
-        customer4.setDeviceId("10:A5:04:17:5D:84");
-        customer4.setDeviceName("10A504175D84");
+        customer4.setDeviceId("B0:DF:3A:10:B5:DD");
+        customer4.setDeviceName("B0DF3A10B5DD");
         customer4.setLastVisit(0);
-        customer4.setPicture(getResources().getDrawable(R.drawable.sample_profile));
+        customer4.setPicture(getResources().getDrawable(R.drawable.profile_jonas_pohlmann));
 
-        customers.add(customer1);
-        customers.add(customer2);
-        customers.add(customer3);
-        customers.add(customer4);
+        knownCustomers.add(customer1);
+        knownCustomers.add(customer2);
+        knownCustomers.add(customer3);
+        knownCustomers.add(customer4);
 
-        Log.d(TAG, "Known customers:");
-        for (Customer customer : customers) {
+        Log.d(TAG, "Known knownCustomers:");
+        for (Customer customer : knownCustomers) {
             Log.d(TAG, " - " + customer.getName() + ": " + customer.getDevice());
         }
+    }
+
+    public void showCustomerDetails(String device) {
+        Customer customer = getCustomerByDevice(device);
+        if (customer == null) {
+            Log.e(TAG, "Requested customer details for unknown device: " + device);
+            addNewCustomer(device);
+            return;
+        }
+
+        ((MainActivity) contextActivity).showCustomerDetail(device);
+    }
+
+    public void addNewCustomer(String device) {
+        ((MainActivity) contextActivity).addNewCustomer(device);
     }
 
     public void scanForDevices() {
@@ -182,17 +203,19 @@ public class MobileApp extends Application {
             mBluetoothAdapter.startDiscovery();
         }
 
-        Log.d(TAG, "Bluetooth broadcast invoked");
+        //Log.d(TAG, "Bluetooth broadcast invoked");
 
         lastBluetoothBroadcast = (new Date()).getTime();
+
+        notifyCustomersChangedListeners();
     }
 
     private void searchForKnownDevices() {
         BluetoothAdapter mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
 
 
-        Log.d(TAG, "Scanning for customers:");
-        for (Customer customer : customers) {
+        Log.d(TAG, "Scanning for knownCustomers:");
+        for (Customer customer : knownCustomers) {
             try {
                 //Log.d(TAG, "Scanning for customer: " + customer.getDevice());
                 BluetoothDevice customerDevice = mBluetoothAdapter.getRemoteDevice(customer.getDeviceId());
@@ -220,7 +243,19 @@ public class MobileApp extends Application {
         if (device == null) {
             return null;
         }
-        for (Customer customer : customers) {
+        for (Customer customer : knownCustomers) {
+            if (customer.getDevice().equals(device)) {
+                return customer;
+            }
+        }
+        return null;
+    }
+
+    public Customer getUnknownDevice(String device) {
+        if (device == null) {
+            return null;
+        }
+        for (Customer customer : unknownCustomers) {
             if (customer.getDevice().equals(device)) {
                 return customer;
             }
@@ -247,10 +282,29 @@ public class MobileApp extends Application {
 
                     Log.d(TAG, " - New customer Blukii identified: name: " + customer.getName() + " device: " + customer.getDevice());
                 } else {
+                    customer = new Customer((new Date()).getTime());
+
                     if (device.getName() != null && device.getName().contains("blukii")) {
+                        customer.setName("Blukii " + deviceString);
+                        customer.setPicture(getResources().getDrawable(R.drawable.blukii));
                         Log.d(TAG, " - New blukii found: " + deviceString + " > name: " + device.getName() + " id: " + device.getAddress() + " rssi: " + String.valueOf(rssi));
                     } else {
+                        //customer.setName("Mobile device " + deviceString);
+                        if (device.getName() != null) {
+                            customer.setName(device.getName());
+                        } else {
+                            customer.setName("Unknown device " + deviceString);
+                        }
+                        customer.setPicture(getResources().getDrawable(R.drawable.unknown_device));
                         //Log.d(TAG, " - Unknown device: " + deviceString + " > name: " + device.getName() + " id: " + device.getAddress() + " rssi: " + String.valueOf(rssi));
+                    }
+
+                    customer.setLastVisit((new Date()).getTime());
+                    customer.setDeviceId(device.getAddress());
+                    customer.setDeviceName(device.getName());
+
+                    if (!unknownDeviceAlreadyFound(customer)) {
+                        unknownCustomers.add(customer);
                     }
                 }
 
@@ -262,6 +316,27 @@ public class MobileApp extends Application {
                 //Log.d(TAG, "Broadcast action: " + action);
             }
         }
+    }
+
+    public void addCustomersChangedListener(CustomersChangedListener listener) {
+        if (!customersChangedListeners.contains(listener)) {
+            customersChangedListeners.add(listener);
+        }
+    }
+
+    private void notifyCustomersChangedListeners() {
+        for (CustomersChangedListener listener : customersChangedListeners) {
+            listener.onCustomersChanged();
+        }
+    }
+
+    private boolean unknownDeviceAlreadyFound(Customer customer) {
+        for (Customer unkownCustomer : unknownCustomers) {
+            if (unkownCustomer.getDevice().equals(customer.getDevice())) {
+                return true;
+            }
+        }
+        return false;
     }
 
     public void destroy() {
@@ -293,10 +368,18 @@ public class MobileApp extends Application {
     }
 
     public ArrayList<Customer> getCustomers() {
-        return customers;
+        return knownCustomers;
     }
 
     public void setCustomers(ArrayList<Customer> customers) {
-        this.customers = customers;
+        this.knownCustomers = customers;
+    }
+
+    public ArrayList<Customer> getUnknownCustomers() {
+        return unknownCustomers;
+    }
+
+    public void setUnknownCustomers(ArrayList<Customer> unknownCustomers) {
+        this.unknownCustomers = unknownCustomers;
     }
 }

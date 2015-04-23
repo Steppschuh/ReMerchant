@@ -1,7 +1,12 @@
 package com.steppschuh.remerchant;
 
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.support.v4.app.Fragment;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 
@@ -9,11 +14,15 @@ import android.view.MenuItem;
 public class MainActivity extends ActionBarActivity {
 
     MobileApp app;
+    public static final int CAMERA_REQUEST = 5;
+    Fragment lastFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        Log.d(MobileApp.TAG, "Creating main activity");
 
         app = (MobileApp) getApplication();
         if (!app.isInitialized()) {
@@ -22,11 +31,53 @@ public class MainActivity extends ActionBarActivity {
             app.setContextActivity(this);
         }
 
-        getSupportFragmentManager().beginTransaction()
-                .add(R.id.container, new FragmentOverview())
-                .commit();
+        showCustomerList();
     }
 
+    public void showCustomerDetail(String device) {
+        FragmentCustomerDetail fragment = new FragmentCustomerDetail();
+        fragment.setCustomerDevice(device);
+
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.container, fragment)
+                .commit();
+
+        lastFragment = fragment;
+    }
+
+    public void addNewCustomer(String device) {
+        FragmentCustomerNew fragment = new FragmentCustomerNew();
+        fragment.setCustomerDevice(device);
+
+        getSupportFragmentManager().beginTransaction()
+                .addToBackStack(null)
+                .add(R.id.container, fragment)
+                .commit();
+
+        lastFragment = fragment;
+    }
+
+    public void showCustomerList() {
+        getSupportFragmentManager().beginTransaction()
+                .add(R.id.container, new FragmentCustomersPager())
+                .commit();
+
+        lastFragment = null;
+    }
+
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Log.d(MobileApp.TAG, "onActivityResult: " + requestCode + " result: " + resultCode);
+        if (requestCode == CAMERA_REQUEST && resultCode == RESULT_OK) {
+            try {
+                Bitmap photo = (Bitmap) data.getExtras().get("data");
+                ((FragmentCustomerNew) lastFragment).updatePhoto(new BitmapDrawable(getResources(), photo));
+                Log.d(MobileApp.TAG, "Customer photo updated");
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

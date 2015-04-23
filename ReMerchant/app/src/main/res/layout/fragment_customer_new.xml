@@ -6,8 +6,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    tools:context=".MainActivity$PlaceholderFragment">
+    android:paddingBottom="@dimen/activity_vertical_margin">
 
     <LinearLayout
         android:orientation="vertical"
@@ -16,7 +15,7 @@
 
         <RelativeLayout
             android:id="@+id/imageContainer"
-            android:layout_weight="1"
+            android:layout_weight="2"
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
@@ -36,29 +35,9 @@
                     <ImageView
                         android:id="@+id/itemImage"
                         android:scaleType="centerCrop"
-                        android:src="@drawable/sample_profile"
+                        android:src="@drawable/profile_none"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent" />
-
-                    <RelativeLayout
-                        android:id="@+id/itemNameContainer"
-                        android:padding="0dp"
-                        android:layout_alignParentBottom="true"
-                        android:background="@color/black_transparent"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content">
-
-                        <TextView
-                            android:id="@+id/itemNameLabel"
-                            android:text="Customer Name"
-                            android:layout_margin="10dp"
-                            android:textColor="@android:color/white"
-                            android:textSize="@dimen/abc_text_size_body_1_material"
-                            android:gravity="center"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content" />
-
-                    </RelativeLayout>
 
                 </RelativeLayout>
 
@@ -84,40 +63,58 @@
                     android:layout_height="wrap_content"
                     card_view:cardCornerRadius="4dp">
 
-                    <RelativeLayout
+                    <LinearLayout
                         android:layout_margin="10dp"
+                        android:orientation="vertical"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent">
 
                         <TextView
-                            android:id="@+id/estimatePriceLabel"
-                            android:text="@string/customer_layality"
+                            android:text="Customer Name"
                             android:textSize="@dimen/abc_text_size_body_1_material"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
-                        <SeekBar
-                            android:id="@+id/seekBar"
-                            android:layout_below="@id/estimatePriceLabel"
-                            android:layout_width="fill_parent"
+                        <EditText
+                            android:id="@+id/customerName"
+                            android:text="John Doe"
+                            android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="5dp"
-                            android:layout_marginBottom="0dp"
-                            android:max="100"
-                            android:progress="30"
-                            android:secondaryProgress="0" />
+                            android:layout_marginBottom="10dp"/>
 
                         <TextView
-                            android:id="@+id/estimatePriceValue"
-                            android:text="3 / 10"
-                            android:layout_below="@id/seekBar"
+                            android:text="Customer E-Mail"
                             android:textSize="@dimen/abc_text_size_body_1_material"
-                            android:gravity="center"
+                            android:gravity="left"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content" />
 
-                    </RelativeLayout>
+                        <EditText
+                            android:id="@+id/customerEmail"
+                            android:text="john.doe@gmail.com"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"/>
+
+
+                        <TextView
+                            android:text="Device ID"
+                            android:textSize="@dimen/abc_text_size_body_1_material"
+                            android:gravity="left"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+
+                        <EditText
+                            android:id="@+id/customerDeviceName"
+                            android:text=""
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="10dp"/>
+
+
+
+                    </LinearLayout>
 
                 </android.support.v7.widget.CardView>
 
@@ -141,15 +138,8 @@
                             android:layout_height="wrap_content">
 
                             <Button
-                                android:id="@+id/skipItem"
-                                android:text="@string/customer_promo_offer"
-                                android:layout_weight="1"
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content" />
-
-                            <Button
                                 android:id="@+id/submitItem"
-                                android:text="@string/customer_process_order"
+                                android:text="Add customer"
                                 android:layout_weight="1"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content" />

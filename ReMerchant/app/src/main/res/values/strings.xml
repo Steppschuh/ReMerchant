@@ -7,5 +7,10 @@
     <string name="customer_layality">Loyality Bonus</string>
     <string name="customer_process_order">Process Order</string>
     <string name="customer_promo_offer">Offer Promo</string>
+    <string name="customer_last_seen">Last seen:</string>
+
+    <string name="title_all_customers">All known customers</string>
+    <string name="title_recent_customers">Recently seen customers</string>
+    <string name="title_all_devices">Unknown customers</string>
 
 </resources>

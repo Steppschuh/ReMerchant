@@ -2,13 +2,14 @@ package com.steppschuh.remerchant;
 
 import android.graphics.drawable.Drawable;
 
+import java.util.Comparator;
 import java.util.Date;
 
 public class Customer {
 
     public static final int RECENT_CUSTOMER_TIMEOUT = 1200000;
 
-    private int id;
+    private long id;
     private String name;
     private Drawable picture;
     private int loyality;
@@ -17,7 +18,7 @@ public class Customer {
     private long lastVisit;
     private short rssi;
 
-    public Customer(int id) {
+    public Customer(long id) {
         this.id = id;
     }
 
@@ -51,15 +52,39 @@ public class Customer {
         }
     }
 
+    public String getLastSeenString() {
+        long delta = getLastSeenDelta();
+        if (delta > 60 * 60 * 24 * 7) {
+            return "over a week ago";
+        } else if (delta > 60 * 60 * 24) {
+            return "a few days ago";
+        } else if (delta > 60 * 60) {
+            return "a few hours ago";
+        } else if (delta > 60 * 5) {
+            return "a few minutes ago";
+        } else if (delta >= 30) {
+            return "a few seconds ago";
+        } else {
+            return "just now";
+        }
+    }
+
+    public static class LastSeenComparator implements Comparator<Customer> {
+        @Override
+        public int compare(Customer o1, Customer o2) {
+            return (int) (o1.getLastVisit() - (o2.getLastVisit()));
+        }
+    }
+
     public long getLastSeenDelta() {
         return ((new Date()).getTime() - lastVisit) / 1000;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
@@ -119,3 +144,4 @@ public class Customer {
         this.rssi = rssi;
     }
 }
+

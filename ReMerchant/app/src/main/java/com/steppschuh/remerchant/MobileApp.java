@@ -73,15 +73,15 @@ public class MobileApp extends Application {
         customer2.setLastVisit(1429733487200l);
         customer2.setPicture(getResources().getDrawable(R.drawable.profile_brett_arrington));
 
-        Customer customer3 = new Customer(1);
-        customer3.setName("Max Mustermann");
+        Customer customer3 = new Customer(2);
+        customer3.setName("Martina Jeronski");
         customer3.setLoyality(4);
         customer3.setDeviceId("78:A5:04:17:60:2A");
         customer3.setDeviceName("78A50417602A");
         customer3.setLastVisit(1429733487200l);
-        customer3.setPicture(getResources().getDrawable(R.drawable.profile_none));
+        customer3.setPicture(getResources().getDrawable(R.drawable.profile_martina_jeronski));
 
-        Customer customer4 = new Customer(1);
+        Customer customer4 = new Customer(3);
         customer4.setName("Jonas Pohlmann");
         customer4.setLoyality(10);
         customer4.setDeviceId("B0:DF:3A:10:B5:DD");
@@ -89,10 +89,37 @@ public class MobileApp extends Application {
         customer4.setLastVisit(0);
         customer4.setPicture(getResources().getDrawable(R.drawable.profile_jonas_pohlmann));
 
+        Customer customer5 = new Customer(4);
+        customer5.setName("Christian Strobl");
+        customer5.setLoyality(1);
+        customer5.setDeviceId("78:A5:04:17:5E:A8");
+        customer5.setDeviceName("78A504175EA8");
+        customer5.setLastVisit(1429733487200l);
+        customer5.setPicture(getResources().getDrawable(R.drawable.profile_christian_strobl));
+
+        Customer customer6 = new Customer(5);
+        customer6.setName("Richard Katelein");
+        customer6.setLoyality(8);
+        customer6.setDeviceId("78:A5:04:17:5C:EC");
+        customer6.setDeviceName("78A504175CEC");
+        customer6.setLastVisit(1429733487200l);
+        customer6.setPicture(getResources().getDrawable(R.drawable.profile_richard_katelein));
+
+        Customer customer7 = new Customer(6);
+        customer7.setName("Steve Wozniak");
+        customer7.setLoyality(8);
+        customer7.setDeviceId("70:A5:04:17:5C:EC");
+        customer7.setDeviceName("70A504175CEC");
+        customer7.setLastVisit((new Date()).getTime() - (1000 * 60 * 60 * 24));
+        customer7.setPicture(getResources().getDrawable(R.drawable.profile_steve_wozniak));
+
         knownCustomers.add(customer1);
         knownCustomers.add(customer2);
         knownCustomers.add(customer3);
         knownCustomers.add(customer4);
+        knownCustomers.add(customer5);
+        knownCustomers.add(customer6);
+        knownCustomers.add(customer7);
 
         Log.d(TAG, "Known knownCustomers:");
         for (Customer customer : knownCustomers) {

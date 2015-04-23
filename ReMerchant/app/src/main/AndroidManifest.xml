@@ -7,6 +7,30 @@
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-feature android:name="android.hardware.camera" android:required="false" />
 
+    <uses-permission android:name="android.permission.READ_LOGS" />
+    <uses-permission android:name="com.aevi.permission.CONFIGURATION" />
+    <uses-permission android:name="com.aevi.permission.PAYMENT_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.CARD_TYPE" />
+    <uses-permission android:name="com.aevi.permission.REFUND_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.DEPOSIT_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.TOKEN_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.MOTO_PAYMENT_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.MOTO_REFUND_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.REVERSAL_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.PRE_AUTHORISATION_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.COMPLETION_REQUEST" />
+    <uses-permission android:name="com.aevi.permission.PRINT_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.CRASH_LOG_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.TRANSACTION_LOG_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.SHARED_PREFERENCES_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.AUTHENTICATION_REQUEST" />
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="com.aevi.permission.SMART_CARD_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.MAG_STRIPE_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.SYSTEM_BAR_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.MAIL_SERVICE" />
+    <uses-permission android:name="com.aevi.permission.LED_SERVICE" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"

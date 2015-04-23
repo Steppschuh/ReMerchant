@@ -15,6 +15,8 @@ public class MainActivity extends ActionBarActivity {
 
     MobileApp app;
     public static final int CAMERA_REQUEST = 5;
+    public static final int PAYMENT_REQUEST = 6;
+
     Fragment lastFragment;
 
     @Override

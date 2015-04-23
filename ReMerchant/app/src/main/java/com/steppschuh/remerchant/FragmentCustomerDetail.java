@@ -13,6 +13,11 @@ import android.widget.RelativeLayout;
 import android.widget.SeekBar;
 import android.widget.TextView;
 
+import com.aevi.payment.PaymentRequest;
+
+import java.math.BigDecimal;
+import java.util.Currency;
+
 public class FragmentCustomerDetail extends Fragment implements CustomersChangedListener {
 
     MobileApp app;
@@ -82,20 +87,39 @@ public class FragmentCustomerDetail extends Fragment implements CustomersChanged
         offerPromoButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(getString(R.string.customer_promo_offer))
-                        .setMessage("Invoking Albert payment flow with promotional discount")
-                        .show();
+                try {
+                    PaymentRequest payment = new PaymentRequest(new BigDecimal("1.00"));
+                    payment.setCurrency(Currency.getInstance("EUR"));
+                    getActivity().startActivityForResult(payment.createIntent(), MainActivity.PAYMENT_REQUEST);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(getString(R.string.customer_process_order))
+                            .setMessage("Invoking Albert payment flow with promotional discount")
+                            .show();
+                }
             }
         });
 
         processOrderButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new AlertDialog.Builder(getActivity())
-                        .setTitle(getString(R.string.customer_process_order))
-                        .setMessage("Invoking Albert payment flow")
-                        .show();
+                if (customer.getLoyality() < 10) {
+                    customer.setLoyality(customer.getLoyality() + 1);
+                    loyalityValue.setText(customer.getLoyality() + " / 10");
+                }
+
+                try {
+                    PaymentRequest payment = new PaymentRequest(new BigDecimal("3.00"));
+                    payment.setCurrency(Currency.getInstance("EUR"));
+                    getActivity().startActivityForResult(payment.createIntent(), MainActivity.PAYMENT_REQUEST);
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    new AlertDialog.Builder(getActivity())
+                            .setTitle(getString(R.string.customer_process_order))
+                            .setMessage("Invoking Albert payment flow")
+                            .show();
+                }
             }
         });
     }

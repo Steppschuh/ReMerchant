@@ -108,8 +108,8 @@ public class MobileApp extends Application {
         Customer customer7 = new Customer(6);
         customer7.setName("Steve Wozniak");
         customer7.setLoyality(8);
-        customer7.setDeviceId("70:A5:04:17:5C:EC");
-        customer7.setDeviceName("70A504175CEC");
+        customer7.setDeviceId("70:A5:04:17:5C:0C");
+        customer7.setDeviceName("70A504175C0C");
         customer7.setLastVisit((new Date()).getTime() - (1000 * 60 * 60 * 24));
         customer7.setPicture(getResources().getDrawable(R.drawable.profile_steve_wozniak));
 

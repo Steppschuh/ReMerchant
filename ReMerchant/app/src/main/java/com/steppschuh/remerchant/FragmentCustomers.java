@@ -67,7 +67,7 @@ public class FragmentCustomers extends Fragment implements CustomersChangedListe
         switch (type) {
             case TYPE_ALL_CUSTOMERS: {
                 customersToDisplay = app.getCustomers();
-                Collections.sort(customersToDisplay, new Customer.LastSeenComparator());
+                //Collections.sort(customersToDisplay, new Customer.LastSeenComparator());
                 break;
             }
             case TYPE_RECENT_CUSTOMERS: {
@@ -76,7 +76,7 @@ public class FragmentCustomers extends Fragment implements CustomersChangedListe
                         customersToDisplay.add(customer);
                     }
                 }
-                Collections.sort(customersToDisplay, new Customer.LastSeenComparator());
+                //Collections.sort(customersToDisplay, new Customer.LastSeenComparator());
                 break;
             }
             case TYPE_DEVICES: {
@@ -85,7 +85,7 @@ public class FragmentCustomers extends Fragment implements CustomersChangedListe
                         customersToDisplay.add(customer);
                     }
                 }
-                Collections.sort(customersToDisplay, new Customer.LastSeenComparator());
+                //Collections.sort(customersToDisplay, new Customer.LastSeenComparator());
                 break;
             }
         }

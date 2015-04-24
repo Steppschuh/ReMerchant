@@ -1,20 +1,8 @@
 # ReMerchant
-We wanted to 
+ReMerchant allows you to track and identify customers in stores using a Wincor Nixdorf Albert device.
 
-	Build a registered customer database
-	
-	Identify our customers
-	
-	Treat our customers right
-	
-	Know what our customer wants
-	
+Learn more about the advantages [here](https://prezi.com/iubuzq1yjsed/remerchant/)
 
-Therefore, we created the App ReMerchant
-
-![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Screenshot_2015-04-23-13-57-11.png "Screen")
-![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Screenshot_2015-04-23-13-57-15.png "Screen")
-![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Screenshot_2015-04-23-13-57-21.png "Screen")
-![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Screenshot_2015-04-23-13-57-28.png "Screen")
-![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Screenshot_2015-04-23-13-57-37.png "Screen")
-![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Screenshot_2015-04-23-13-57-46.png "Screen")
+![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Media/remerchant_cover.jpg "Cover")
+![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Media/remerchant_composition_new.png "Screen")
+![Banner](https://raw.githubusercontent.com/Steppschuh/ReMerchant/master/Media/remerchant_composition_existing.png "Screen")

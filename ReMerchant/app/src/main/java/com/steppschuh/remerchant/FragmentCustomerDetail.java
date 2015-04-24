@@ -107,6 +107,7 @@ public class FragmentCustomerDetail extends Fragment implements CustomersChanged
                 if (customer.getLoyality() < 10) {
                     customer.setLoyality(customer.getLoyality() + 1);
                     loyalityValue.setText(customer.getLoyality() + " / 10");
+                    seekBar.setProgress(customer.getLoyality());
                 }
 
                 try {
